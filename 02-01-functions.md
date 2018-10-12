@@ -78,3 +78,15 @@ write_file("students.txt")
 
 ```
 
+
+```python
+def doblar_un_numero(numero):
+    return numero * 2
+
+doblar_un_numero(3)
+
+doblar_un_numero_lambda = lambda numero: numero * 2
+
+doblar_un_numero_lambda(3)
+```
+
