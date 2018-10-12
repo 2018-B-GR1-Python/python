@@ -47,4 +47,34 @@ def imprimirNombre(nombre):
 imprimirNombre("Vicente")
 ```
 
+```python
+def read_file(path):
+    try:
+        file_opened = open(path, "r") # r -> read
+        print(file_opened)
+        # print(file_opened.readlines()) // no se puede leer dos veces
+        lines = file_opened.readlines()
+        print(lines)
+        for line in lines:
+            print("Line content: ", line)
+        file_opened.close()
+    except Exception:
+        print("No se pudo leer el archivo")
+
+
+
+def write_file(path):
+    try:
+        file_opened = open(path, "a") # a -> append w -> overwrite rb ->  reading binary wn -> writing binary
+        file_opened.write("nuevo contenido\n")
+        file_opened.close()
+    except Exception:
+        print("No se pudo leer el archivo")
+
+
+read_file("students.txt")
+
+write_file("students.txt")
+
+```
 
