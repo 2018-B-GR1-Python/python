@@ -150,6 +150,7 @@ print(angulos)
 angulos_en_radianes = angulos * np.pi/180
 print(angulos_en_radianes)
 print(np.radians(angulos))
+print(np.degrees(angulos_en_radianes))
 ```
 
 #### Sen
@@ -166,3 +167,21 @@ angulos = np.array([0,30,45,60,90])
 # Funcion coseno() en los angulos del arreglo
 print(np.cos(angulos))
 ```
+
+#### Tan
+
+```
+angulos = np.array([0,30,45,60,90])
+# Funcion tangente() en los angulos del arreglo
+print(np.tan(angulos))
+```
+
+#### Tan
+
+```
+angulos = np.array([0,30,45,60,90])
+# Funcion tangente() en los angulos del arreglo
+print(np.tan(angulos))
+```
+
+
