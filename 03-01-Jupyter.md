@@ -176,12 +176,19 @@ angulos = np.array([0,30,45,60,90])
 print(np.tan(angulos))
 ```
 
-#### Tan
+#### Media
 
 ```
-angulos = np.array([0,30,45,60,90])
-# Funcion tangente() en los angulos del arreglo
-print(np.tan(angulos))
+notas = np.array([1,3,5,7,6,5,3,4,6,7,8,3,1,5,6,8,9,10,10,6,5,6,7,8,9])
+print(np.mean(notas))
+```
+
+#### Mediana
+
+```
+
+notas = np.array([1,3,5,7,6,5,3,4,6,7,8,3,1,5,6,8,9,10,10,6,5,6,7,8,9])
+print(np.median(notas))
 ```
 
 
