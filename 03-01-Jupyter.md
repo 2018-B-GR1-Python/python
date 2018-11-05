@@ -190,7 +190,19 @@ notas = np.array([1,3,5,7,6,5,3,4,6,7,8,3,1,5,6,8,9,10,10,6,5,6,7,8,9])
 print(np.median(notas))
 ```
 
+#### Desviacion Estandar
 
+```python
+notas = np.array([1,3,5,7,6,5,3,4,6,7,8,3,1,5,6,8,9,10,10,6,5,6,7,8,9])
+print(np.std(notas))
+```
+
+#### Varianza
+
+```python
+notas = np.array([1,3,5,7,6,5,3,4,6,7,8,3,1,5,6,8,9,10,10,6,5,6,7,8,9])
+print(np.var(notas))
+```
 
 #### Generate from text
 
@@ -218,5 +230,64 @@ arreglo_dos_d =  np.array([[1,2],[2,3],[3,4]])
 print(arreglo_dos_d)
 print(arreglo_dos_d.shape)
 ```
+
+#### Slicing & Dicing
+
+```python
+arreglo_al_cuadrado = np.arange(11)**2
+print(arreglo_al_cuadrado)
+print(arreglo_al_cuadrado[0])
+print(arreglo_al_cuadrado[0:3])
+print(arreglo_al_cuadrado[-2])
+print(arreglo_al_cuadrado[2:-3])
+print(arreglo_al_cuadrado[-3:-1])
+print(arreglo_al_cuadrado[2:])
+print(arreglo_al_cuadrado[:4])
+print(arreglo_al_cuadrado[2:8:4]) # Pasos de 4 en 4  desde el 2 hasta el 8
+print(arreglo_al_cuadrado[::-1]) # De atras para adelante
+```
+
+## Iteracion
+
+### for
+
+```python
+estudiantes = np.array([['Adrian','Vicente','Eguez','Sarzosa'],
+                      [1,2,3,4],
+                      [5,6,7,8]])
+for i in estudiantes:
+    print(f"Dimension uno: {i}")
+for i in estudiantes.flatten():
+    print(f"Todos en una dimension: {i}")
+for i in estudiantes.flatten(order='F'):
+    print(f"Todos en una dimension ordenados por 'First': {i}")
+```
+
+### nditer
+
+```python
+arreglo_tres_cuatro = np.arange(12).reshape(3,4)
+print(arreglo_tres_cuatro)
+for i in np.nditer(arreglo_tres_cuatro):
+    print(i)
+for i in np.nditer(arreglo_tres_cuatro, order='F'):
+    print(i)
+for i in np.nditer(arreglo_tres_cuatro, order='F', flags = ['external_loop']):
+    print(i)
+#  for i in np.nditer(arreglo_tres_cuatro):  # ReadOnly
+#      i[...] = i*i
+for i in np.nditer(arreglo_tres_cuatro, op_flags = ['readwrite']):  # ReadOnly
+    i[...] = i*i
+arreglo_tres_cuatro
+```
+
+## Reshaping
+ 
+### 
+
+```python
+
+```
+
 
 
