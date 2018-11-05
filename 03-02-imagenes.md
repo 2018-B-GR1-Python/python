@@ -31,6 +31,24 @@ Basicamente existen dos tipos de imagenes, o de `representaciones` de imagenes. 
 ![alt Imagen representada en arreglo 3D](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/imagen%203D.PNG "Imagen representada en arreglo 3D")
 
 
+## Ejemplo
+
+```python
+import numpy as np
+# pip install scipy
+from scipy import ndimage
+from scipy import misc
+# Get a 1024 x 768, color image of a raccoon face.
+raccon_face_image = misc.face() 
+raccon_face_image.shape  # (768, 1024, 3)
+type(raccon_face_image)  # numpy.ndarray
+import matplotlib.pyplot as plt
+plt.imshow(raccon_face_image)
+partial_raccon_face_image = raccon_face_image[384:,512:,:]
+plt.imshow(partial_raccon_face_image)
+plt.show()
+```
+
 
 # Creditos
 [Pluralsight](https://app.pluralsight.com/player?course=numpy-working-with-multidimensional-data&author=janani-ravi&name=65a7bc5d-54ab-4b87-b966-67794e77d2d5&clip=10&mode=live)
