@@ -282,12 +282,58 @@ arreglo_tres_cuatro
 ```
 
 ## Reshaping
- 
-### 
+
+```python
+paises_tuplas = np.array([('Ecuador','USA','Cuba','Venezuela'),
+              ('Brazil','China','Japon','Mexico')])
+print(paises_tuplas)
+print(paises_tuplas.shape)
+print(paises_tuplas.flatten())  # 1D Array
+print(paises_tuplas.T)  # Transposes Matrix
+print(paises_tuplas.T.flatten())  # 1D Array
+print(paises_tuplas.reshape(4,2))  # 1D Array
+paises = np.array(['Ecuador','USA','Cuba','Venezuela','Brazil','China'])
+print(paises)
+print(paises.reshape(-1,3))  # -1 significa que no se el numero de esa dimension
+print(paises.reshape(2,-1))  # -1 significa que no se el numero de esa dimension
+```
+
+## Splitting
+
+### Split
+
+```python
+arreglo_split = np.array([1,2,3,4,5,6,7,8,9,10,11,12])
+print(np.split(arreglo_split,2))
+print(np.split(arreglo_split,3))
+print(np.split(arreglo_split,4))
+#  print(np.split(arreglo_split,5)) ## Error
+print(np.split(arreglo_split,[2,3,5,8,9]))
+```
+
+### Horizontal split
+
+```python
+paises = np.array(['Ecuador','USA','Cuba','Venezuela','Brazil','China'])
+print(np.hsplit(paises,2))
+print(np.hsplit(paises,3))
+print(np.hsplit(paises,6))
+# print(np.hsplit(paises,4))  # Error
+print('*******************************************\n\n\n\n\n')
+
+print('*******************************************')
+paises_tuplas = np.array([('Ecuador','USA','Cuba','Venezuela'),
+              ('Brazil','China','Japon','Mexico')])
+print(paises_tuplas)
+xa, xb, xc, xd = np.hsplit(paises_tuplas,4)
+print(xa)
+print(xb)
+print(xc)
+print(xd)
+```
+
+### Vertical split
 
 ```python
 
 ```
-
-
-
