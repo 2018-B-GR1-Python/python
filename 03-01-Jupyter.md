@@ -335,5 +335,7 @@ print(xd)
 ### Vertical split
 
 ```python
-
+paises_tres_dos = np.array(['Ecuador','USA','Cuba','Venezuela','Brazil','China']).reshape(6,1)
+print(paises_tres_dos)
+print(np.vsplit(paises_tres_dos,3)
 ```
