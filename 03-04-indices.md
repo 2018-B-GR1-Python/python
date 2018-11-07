@@ -27,3 +27,25 @@ print(frutas[arreglo_filas, arreglo_columnas])
 frutas[arreglo_filas, arreglo_columnas] = 'HHHH'
 print(frutas)
 ```
+
+## Ejemplo GDP
+
+```
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+gdp_2016 = pd.read_csv("data/gdp_pc.csv")["2016"].values  # Producto interno bruto
+gdp_2016.shape  # 1D array
+plt.plot(gdp_2016)
+plt.show()
+np.median(gdp_2016)  # Entradas con valores "nan" Que no son numeros Not A Number
+gdp_2016_sin_nan = gdp_2016[~np.isnan(gdp_2016)]  # Entradas sin valores "nan" Que no son numeros Not A Number
+gdp_2016_sin_nan
+gdp_2016_sin_nan.shape
+np.median(gdp_2016_sin_nan)
+np.mean(gdp_2016_sin_nan)
+np.count_nonzero(gdp_2016_sin_nan[gdp_2016_sin_nan > 10000])
+np.count_nonzero(gdp_2016_sin_nan[(gdp_2016_sin_nan > 10000) & (gdp_2016_sin_nan < 20000)])
+np.sort(gdp_2016_sin_nan)
+np.sort(gdp_2016_sin_nan)[:10]
+```
