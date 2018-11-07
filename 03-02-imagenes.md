@@ -49,6 +49,39 @@ plt.imshow(partial_raccon_face_image)
 plt.show()
 ```
 
+## Split Horizontal
+
+```python
+raccon_uno, raccon_dos = np.split(raccon_face_image,2)  # Horizontal split
+plt.imshow(raccon_uno)
+plt.show()
+plt.imshow(raccon_dos)
+plt.show()
+```
+
+## Split Vertical
+
+```python
+raccon_uno_vertical, raccon_dos_vertical = np.split(raccon_face_image,2, axis=1)  # Vertical split
+plt.imshow(raccon_uno_vertical)
+plt.show()
+plt.imshow(raccon_dos_vertical)
+plt.show()
+```
+
+## Concatenate horizontal
+
+```python
+plt.imshow(np.concatenate((raccon_uno_vertical,raccon_dos_vertical)))
+plt.show()
+```
+
+## Concatenate vertical
+
+```python
+plt.imshow(np.concatenate((raccon_uno_vertical,raccon_dos_vertical), axis=1))
+plt.show()
+```
 
 # Creditos
 [Pluralsight](https://app.pluralsight.com/player?course=numpy-working-with-multidimensional-data&author=janani-ravi&name=65a7bc5d-54ab-4b87-b966-67794e77d2d5&clip=10&mode=live)
