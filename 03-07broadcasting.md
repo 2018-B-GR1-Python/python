@@ -15,4 +15,10 @@
 ![Broadcasting Constraints](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/broadcasting_constgraints.PNG "Broadcasting Constraints")
 
 
+![Broadcasting Constraints](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/broadcasting_constgraints.PNG "Broadcasting Constraints")
+
+
+![Broadcasting Constraints 2](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/broadcasting_constgraints_2".PNG "Broadcasting Constraints 2")
+
+
 
