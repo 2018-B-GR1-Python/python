@@ -12,6 +12,7 @@
 
 ![Broadcasting Arrays](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/broadcasting_2.PNG "Broadcasting Arrays")
 
+![Broadcasting Constraints](https://raw.githubusercontent.com/2018-B-GR1-Python/python/master/broadcasting_constgraints.PNG "Broadcasting Constraints")
 
 
 
