@@ -22,6 +22,9 @@ data_frame['Uno'][0]  # ok
 # Tipos de datos
 
 1. Text Files
+   1. CSV
+   2. JSON
+   3. HTML
 2. Binary Files
 3. Relational Databases
 
