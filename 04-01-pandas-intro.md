@@ -28,3 +28,40 @@ data_frame['Uno'][0]  # ok
 2. Binary Files
 3. Relational Databases
 
+## Leer csv
+```python
+# f9 para compilar en la terminal
+import pandas as pd
+import os
+
+CSV_PATH = 'C://Users//Adrian//Documents//Spyder//data//artwork_data.csv'
+df = pd.read_csv(CSV_PATH, nrows=5)
+df
+
+df = pd.read_csv(CSV_PATH, nrows=5, index_col = 'id')
+df
+
+df = pd.read_csv(CSV_PATH, 
+                 nrows=5, 
+                 index_col = 'id',
+                 usecols = ['id','artist'])
+df
+
+
+columnas_a_usar = ['id','artist','title','medium',
+                   'year','acquisitionYear','height',
+                   'width','units']
+
+df = pd.read_csv(CSV_PATH, 
+                 index_col = 'id',
+                 usecols = columnas_a_usar)
+# Warning
+# C:\ProgramData\Anaconda3\lib\site-packages\IPython\core\interactiveshell.py:2785: DtypeWarning: Columns (9,13) have mixed types. Specify dtype option on import or set low_memory=False.
+#   interactivity=interactivity, compiler=compiler, result=result)
+df.shape
+
+# Serializar los datos en un archivo y poder usarlos despues
+df.to_pickle('C://Users//Adrian//Documents//Spyder//data//artwork_data_frame.pickle')
+
+
+```
