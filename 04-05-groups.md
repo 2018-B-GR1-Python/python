@@ -38,8 +38,12 @@ for name, group_fd in sdf_agrupado:
 # Un caso donde no exista datos a inferir
 # seccion_data_frame.loc[[11838:16441],'medium']
 
-
-
+def fill_values(series):
+  valores_count = series.value_counts() # Sacar los valores
+  if valores_count.empty:  # Revisar si algun valor esta vacio
+    return series;  # Si ningun valor esta vacio, devolver la serie, no hay nada que hacer
+  valores_mas_utilizados = 
+  
 
 
 ```
