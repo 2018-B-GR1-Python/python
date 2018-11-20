@@ -1,7 +1,7 @@
 # loc iloc
 
 ```python
-mport pandas as pd
+import pandas as pd
 import os
 data_frame_guardado = pd.read_pickle('C://Users//Adrian//Documents//Spyder//data//artwork_data_frame.pickle')
 
