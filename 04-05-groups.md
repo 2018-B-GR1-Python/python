@@ -37,13 +37,52 @@ for name, group_fd in sdf_agrupado:
 # -> Editar a mano
 # Un caso donde no exista datos a inferir
 # seccion_data_frame.loc[[11838:16441],'medium']
+# En este caso todos los valores existen, abrir el dataframe y seleccionar, editarle y cambiarle a "float"
 
-def fill_values(series):
+def llenar_valores_vacios(series):
   valores_count = series.value_counts() # Sacar los valores
   if valores_count.empty:  # Revisar si algun valor esta vacio
     return series;  # Si ningun valor esta vacio, devolver la serie, no hay nada que hacer
-  valores_mas_utilizados = 
-  
+  valores_mas_utilizados = valores_count.index[0]
+  nuevo_valor_medium = series.fillna(valores_mas_utilizados)
+  return nuevo_valor_medium
+
+def transformar_todo_el_df_por_artista(df)
+  group_dfs[]
+  for name, group_df in df.groupby('artist'):
+    df_lleno = group_df.copy()
+    df_lleno.loc([ : , 'medium' ]) = llenar_valores_vacios(group_df['medium'])
+    group_dfs.append(df_lleno)
+  nuevo_df_llenado = pd.concat(group_dfs)
+  return nuevo_df_llenado
+
+# Probar la funcion
+df_lleno_sin_valores_vacios = transformar_todo_el_df_por_artista(seccion_data_frame)
+
+
+# Metodos de panda
+
+medium_agrupados_por_artista = seccion_data_frame.groupby('artist')['medium']
+
+seccion_data_frame.log[:,'medium'] = medium_agrupados_por_artista.transform(llenar_valores_vacios)
+
+# Funcion de agregacion
+
+df.groupby('artist').agg(np.min)  # Very Good performance 
+df.groupby('artist').min()  # Best way in pandas
+
+# Filtrados
+
+agrupados_por_titulo = df.groupby('title')
+titulos_contados = agrupados_por_titulo.size().sort_values(ascending = False)
+
+condicion = lambda x: len(x.index)>1
+
+dup_titles_df = agrupados_por_titulo.filter(condicion)
+
+dup_titles_df.sort_values('title', inplace=True)
+
+
 
 
 ```
