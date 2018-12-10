@@ -56,7 +56,22 @@ plt.legend()
 plt.ylim(0,1)
 plt.xlim(0,1)
 
+#Generate 1000 random numbers
+rands = np.random.normal(size=1000)
+print(rands)
+plt.xlabel('Iteration #')
+plt.ylabel('Random Value')
 
+
+# Graficos en 3D
+
+#Campo Gausiano
+from scipy.ndimage.filters import gaussian_filter
+rands2d = gaussian_filter(np.random.normal(size=(512,512)), sigma=10)
+print(rands2d.shape)
+# https://jakevdp.github.io/PythonDataScienceHandbook/04.07-customizing-colorbars.html
+plt.imshow(rands2d, cmap="RdBu") # gray cubehelix jet viridis magma inferno
+plt.colorbar()
 
 ```
 
