@@ -55,7 +55,7 @@ plt.hist(rands, bins='auto', histtype='stepfilled')  # [0,1,2,3,4,5,6,7]
 plt.hist(rands, bins='auto', cumulative=True)  # -1
 
 # Multiples
-plt.hist((rands, 0.5*rands), bins='auto', histtype='stepfilled') 
+plt.hist((rands, 0.5*rands), bins='auto', histtype='stepfilled') # , stacked=True
 
 
 
