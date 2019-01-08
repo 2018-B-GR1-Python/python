@@ -31,7 +31,7 @@ import scrapy
 nombre_archivo = 'book_titles.txt'
 
 class IntroSpider(scrapy.Spider):  ## Hereda
-  nombre = 'introduccion_spider'
+  name = 'introduccion_spider'
   
   def start_requests(self): ## self = this en java
     urls = [
