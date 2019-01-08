@@ -22,4 +22,13 @@ $ response.css('.quote > .text').extract()
 $ response.css('.row > div > div:nth-child(2) > .text::text').extract()
 $ response.css('.row > div > div:nth-child(5) > .text::text').extract()
 $ response.css('a::attr(href)').extract()
+
+$ response.xpath('/html/head/title').extract()
+$ response.xpath('//title').extract()
+$ response.xpath('/html/body/div/div[2]/div[1]/div[2]/span[1]').extract()
+$ response.xpath('/html/body/div/div/div/div/span').extract()
+$ response.xpath('/html/body/div/div/div/div/span/text()').extract()
+$ response.xpath("//span[@class=''text]").extract()
+$ response.xpath("//span[@class=''text]/text()").extract()
+
 ```
