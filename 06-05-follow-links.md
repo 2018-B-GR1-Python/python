@@ -7,7 +7,7 @@ $ cd python_02/python_02/spiders
 
 ## follow_links_02.py
 
-```
+```python
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
