@@ -11,7 +11,7 @@ $ response.xpath("//*[contains(text(), 'friend')]/text()").extract()
 Extraer texto que contenga la palabra `friend` css
 
 ```
-$ response.css(".text:contains('friend'::text)").extract()
+$ response.css(".text:contains('friend')::text").extract()
 ```
 
 
