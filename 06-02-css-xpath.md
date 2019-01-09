@@ -5,7 +5,7 @@ Inline-style:
 
 
 ```
-$ scrapy shell 'http://quotes.toscrape.com/'
+$ scrapy shell http://quotes.toscrape.com/
 $ response.css('title')
 $ response.css('title').extract()
 $ response.css('title::text').extract()
