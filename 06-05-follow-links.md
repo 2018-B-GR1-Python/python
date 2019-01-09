@@ -20,6 +20,11 @@ class GenSpiderCrawl(CrawlSpider):
   start_urls = ['http://www.un.org/en/sections/about-un/funds-programmes-specialized-agencies-and-others/index.html']
   
   rules = (Rule(LinkExtractor(), callback='parse_page')
+  ## Link extractor rule
+  ## rules = (Rule(LinkExtractor(allow=('funds-programmes-specialized-agencies-and-others')), callback='parse_page')
+  ## rules = (Rule(LinkExtractor(allow='funds-programmes-specialized-agencies-and-others'),
+  ##                             deny=('zh/sections','fr/sections','ru/sections')),
+  ##                             callback='parse_page')
   
   def parse_page(self, response):
     lista_de_agencias = response.css('div.field-item.even > h4::text').extract()
