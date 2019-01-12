@@ -2,7 +2,7 @@
 
 Python scrapy shell
 
-```python
+```
 $ scrapy shell https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=macbook
 $ class ItemProducto(scrapy.Item):
     title = scrapy.Field()
