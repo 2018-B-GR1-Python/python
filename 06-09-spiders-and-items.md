@@ -1,6 +1,6 @@
 # Spiders and Items
 
-```python
+```
 $ scrapy startproject python_03
 $ cd python_03/python_03/spiders
 ```
