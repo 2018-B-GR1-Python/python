@@ -101,6 +101,12 @@ ITEM_PIPELINES = {
   'python_05.pipelines.ValidarPrecio': 200,
   'python_05.pipelines.MarkarComoViable': 300,
 }
+
+# Configurar feed exporters
+# XML JSON CSV son aceptados
+FEED_FORMAT = 'json'
+FEED_URI = 'tmp/macbook.json'
+
 ```
 
 
