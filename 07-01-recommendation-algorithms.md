@@ -226,6 +226,7 @@ import pandas as pd
 dataFile='/Users/swethakolalapudi/Downloads/BX-CSV-Dump/BX-Book-Ratings.csv'
 data=pd.read_csv(dataFile,sep=";",header=0,names=["user","isbn","rating"])
 
+## Set up the data
 
 data.head()
 
@@ -245,39 +246,46 @@ def bookMeta(isbn):
     
 bookMeta("0671027360")
 
-
-data = data[data["isbn"].isin(books.index)]
-
 def faveBooks(user,N):
-    userRatings = data[data["user"]==user]
-    sortedRatings = pd.DataFrame.sort_values(userRatings,['rating'],ascending=[0])[:N] 
-    sortedRatings["title"] = sortedRatings["isbn"].apply(bookMeta)
+    userRatings = data[data["user"]==user]  # Filtering by user  (relevant data)
+    sortedRatings = pd.DataFrame.sort_values(userRatings,['rating'],ascending=[0])[:N]  # Sort by rating in desc order pick N
+    sortedRatings["title"] = sortedRatings["isbn"].apply(bookMeta)  # Apply bookMeta to ISBN column
     return sortedRatings
-    
 
-faveBooks(204622,5)
+data = data[data["isbn"].isin(books.index)]  # Inconsistencies
 
-data.shape
+
+faveBooks(204622,5)  # Top 5 books of that user
+
+## Construc Rating Matrix
+## User vs ISBN -> Rating per book
+
+
+data.shape  # more than 1 million
 
 
 usersPerISBN = data.isbn.value_counts()
 usersPerISBN.head(10)
 
-usersPerISBN.shape
+usersPerISBN.shape  # 340.000 ISBN Columns
 
 
 ISBNsPerUser = data.user.value_counts()
 
-ISBNsPerUser.shape
+ISBNsPerUser.shape  # 150.000 Users Rows
 
 
-data = data[data["isbn"].isin(usersPerISBN[usersPerISBN>10].index)]
 
-data = data[data["user"].isin(ISBNsPerUser[ISBNsPerUser>10].index)]
+
+data = data[data["isbn"].isin(usersPerISBN[usersPerISBN>10].index)]  # ISBN read for more than 10 users
+
+data = data[data["user"].isin(ISBNsPerUser[ISBNsPerUser>10].index)]  # ISBN users read more than 10 books
+
+
 
 
 userItemRatingMatrix=pd.pivot_table(data, values='rating',
-                                    index=['user'], columns=['isbn'])
+                                    index=['user'], columns=['isbn'])  # Rating Matrix (pivot)
 
 userItemRatingMatrix.head()
 
@@ -287,17 +295,21 @@ user1 = 204622
 user2 = 255489
 
 
-user1Ratings = userItemRatingMatrix.transpose()[user1]
+user1Ratings = userItemRatingMatrix.transpose()[user1]  # User 1 
 user1Ratings.head()
 
 
-user2Ratings = userItemRatingMatrix.transpose()[user2]
+user2Ratings = userItemRatingMatrix.transpose()[user2]  # User 1 
+
+
+## Compute de hamming distance
 
 from scipy.spatial.distance import hamming 
-hamming(user1Ratings,user2Ratings)
+hamming(user1Ratings,user2Ratings)  # Hamming distance
 
 
 import numpy as np
+# Distance by any pair of users
 def distance(user1,user2):
         try:
             user1Ratings = userItemRatingMatrix.transpose()[user1]
@@ -311,19 +323,19 @@ def distance(user1,user2):
 distance(204622,10118)
 
 
+
 user = 204622
 allUsers = pd.DataFrame(userItemRatingMatrix.index)
-allUsers = allUsers[allUsers.user!=user]
+allUsers = allUsers[allUsers.user!=user]  # Remove the actual user to recommend
 allUsers.head()
 
-allUsers["distance"] = allUsers["user"].apply(lambda x: distance(user,x))
-
+allUsers["distance"] = allUsers["user"].apply(lambda x: distance(user,x))  # Apply the distance function to this new column
 
 
 K = 10
-KnearestUsers = allUsers.sort_values(["distance"],ascending=True)["user"][:K]
+KnearestUsers = allUsers.sort_values(["distance"],ascending=True)["user"][:K]  # Find the K nearest neighbors
 
-
+# Make the function, sending user and number of K users
 def nearestNeighbors(user,K=10):
     allUsers = pd.DataFrame(userItemRatingMatrix.index)
     allUsers = allUsers[allUsers.user!=user]
@@ -336,26 +348,27 @@ KnearestUsers = nearestNeighbors(user)
 KnearestUsers
 
 
-NNRatings = userItemRatingMatrix[userItemRatingMatrix.index.isin(KnearestUsers)]
+NNRatings = userItemRatingMatrix[userItemRatingMatrix.index.isin(KnearestUsers)]  # Ratings of the Nearest Neighbors for all books
 NNRatings
 
-avgRating = NNRatings.apply(np.nanmean).dropna()
+avgRating = NNRatings.apply(np.nanmean).dropna()  # Average rating per isbn, nanmean is applied for each column (isbn) dropna() drop books which do not have rating
 avgRating.head()
 
 
-booksAlreadyRead = userItemRatingMatrix.transpose()[user].dropna().index
+booksAlreadyRead = userItemRatingMatrix.transpose()[user].dropna().index  # Get ratings of the active user, drop books without rating
 booksAlreadyRead
 
 
-avgRating = avgRating[~avgRating.index.isin(booksAlreadyRead)]
+avgRating = avgRating[~avgRating.index.isin(booksAlreadyRead)]  # Remove average of already read books
 
 N=3
-topNISBNs = avgRating.sort_values(ascending=False).index[:N]
+topNISBNs = avgRating.sort_values(ascending=False).index[:N]  # Sort values and pick N
 
 
-pd.Series(topNISBNs).apply(bookMeta)
+pd.Series(topNISBNs).apply(bookMeta)  # Tell us title and author
 
 
+# function for any user
 
 def topN(user,N=3):
     KnearestUsers = nearestNeighbors(user)
