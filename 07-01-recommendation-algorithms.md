@@ -160,6 +160,225 @@ Same dimensional Space
 Calculate the Distance
 
 
+# Caso de studio
+
+-  Book crossing
+-  What book the user may like.
+-  Find the top N book to recommend to the user.
+-  We are going to use collaborative filtering.
+
+Thera are 2 possible solutions.
+
+-  Nearest neighbor model
+-  Latent factor analysis
+
+## Nearest neighbor model
+
+-  // P P P P P
+-  U1 3 4 - - 4
+-  U2 3 5 3 4 5
+-  U3 4 2 - 5 5
+-  U4 4 - 4 5 2
+-  U5 1 - 4 1 2 
+-  U6 3 4 - 2 5
+
+Options to recomment P3
+
+-  Average of ratings by "similar users"
+-  Ex: U2 and U1 have similar ratings (higher weight)
+-  U5 and U1 are less similar users  (lower weight)
+
+## Distance Metrics
+
+-  **Euclidean distance** (ruler)
+-  **Correlation distance**
+-  U1 1 4 3 4 2
+-  U2 3 4 2 4 4
+-  (grafico de puntos y promedio) (correlation x and y)
+-  result [-1, 1] -> Correlation distance = 1 - Correlation
+-  If correlation distance is high correlation is low and vice versa
+-  **Hamming Distance** % Disagreement of 2 series of numbers (used in binary numbers)
+-  U1 3 3 5 2 1
+-  U2 4 5 2 2 1
+-  Agree 40% Disagree 60% -> Hamming Distance is 0.6
+
+## Finding top N Recommendations
+
+1.  Set up the data -> function to access the relevant information
+    -  ISBN -> Rating Author
+    -  User -> Favorite Books
+2.  Construct a rating matrix  -> Representation for collaborative filtering
+    -  User ISBN RATING -> Matrix User x Products
+3.  Find the K nearest neighbors
+    -  U1 U2 -> Distance -> Distance between users
+    -  User , K -> K nearest neighbors
+4.  Find the top N recommendations -> Average ratings of K nearest neigbors
+    -  Sort and pink N
+
+
+## Set up the data
+
+-  http://www2.informatik.uni-freiburg.de/~cziegler/BX/ (csv dump 3 files)
+-  pandas / numpy / scipy
+
+```python
+import pandas as pd
+dataFile='/Users/swethakolalapudi/Downloads/BX-CSV-Dump/BX-Book-Ratings.csv'
+data=pd.read_csv(dataFile,sep=";",header=0,names=["user","isbn","rating"])
+
+
+data.head()
+
+
+bookFile='/Users/swethakolalapudi/Downloads/BX-CSV-Dump/BX-Books.csv'
+books=pd.read_csv(bookFile,sep=";",header=0,error_bad_lines=False, usecols=[0,1,2],index_col=0,names=['isbn',"title","author"])
+
+
+books.head()
+
+
+def bookMeta(isbn):
+    title = books.at[isbn,"title"]
+    author = books.at[isbn,"author"]
+    return title, author
+    
+    
+bookMeta("0671027360")
+
+
+data = data[data["isbn"].isin(books.index)]
+
+def faveBooks(user,N):
+    userRatings = data[data["user"]==user]
+    sortedRatings = pd.DataFrame.sort_values(userRatings,['rating'],ascending=[0])[:N] 
+    sortedRatings["title"] = sortedRatings["isbn"].apply(bookMeta)
+    return sortedRatings
+    
+
+faveBooks(204622,5)
+
+data.shape
+
+
+usersPerISBN = data.isbn.value_counts()
+usersPerISBN.head(10)
+
+usersPerISBN.shape
+
+
+ISBNsPerUser = data.user.value_counts()
+
+ISBNsPerUser.shape
+
+
+data = data[data["isbn"].isin(usersPerISBN[usersPerISBN>10].index)]
+
+data = data[data["user"].isin(ISBNsPerUser[ISBNsPerUser>10].index)]
+
+
+userItemRatingMatrix=pd.pivot_table(data, values='rating',
+                                    index=['user'], columns=['isbn'])
+
+userItemRatingMatrix.head()
+
+userItemRatingMatrix.shape
+
+user1 = 204622
+user2 = 255489
+
+
+user1Ratings = userItemRatingMatrix.transpose()[user1]
+user1Ratings.head()
+
+
+user2Ratings = userItemRatingMatrix.transpose()[user2]
+
+from scipy.spatial.distance import hamming 
+hamming(user1Ratings,user2Ratings)
+
+
+import numpy as np
+def distance(user1,user2):
+        try:
+            user1Ratings = userItemRatingMatrix.transpose()[user1]
+            user2Ratings = userItemRatingMatrix.transpose()[user2]
+            distance = hamming(user1Ratings,user2Ratings)
+        except: 
+            distance = np.NaN
+        return distance 
+
+
+distance(204622,10118)
+
+
+user = 204622
+allUsers = pd.DataFrame(userItemRatingMatrix.index)
+allUsers = allUsers[allUsers.user!=user]
+allUsers.head()
+
+allUsers["distance"] = allUsers["user"].apply(lambda x: distance(user,x))
+
+
+
+K = 10
+KnearestUsers = allUsers.sort_values(["distance"],ascending=True)["user"][:K]
+
+
+def nearestNeighbors(user,K=10):
+    allUsers = pd.DataFrame(userItemRatingMatrix.index)
+    allUsers = allUsers[allUsers.user!=user]
+    allUsers["distance"] = allUsers["user"].apply(lambda x: distance(user,x))
+    KnearestUsers = allUsers.sort_values(["distance"],ascending=True)["user"][:K]
+    return KnearestUsers
+    
+
+KnearestUsers = nearestNeighbors(user)
+KnearestUsers
+
+
+NNRatings = userItemRatingMatrix[userItemRatingMatrix.index.isin(KnearestUsers)]
+NNRatings
+
+avgRating = NNRatings.apply(np.nanmean).dropna()
+avgRating.head()
+
+
+booksAlreadyRead = userItemRatingMatrix.transpose()[user].dropna().index
+booksAlreadyRead
+
+
+avgRating = avgRating[~avgRating.index.isin(booksAlreadyRead)]
+
+N=3
+topNISBNs = avgRating.sort_values(ascending=False).index[:N]
+
+
+pd.Series(topNISBNs).apply(bookMeta)
+
+
+
+def topN(user,N=3):
+    KnearestUsers = nearestNeighbors(user)
+    NNRatings = userItemRatingMatrix[userItemRatingMatrix.index.isin(KnearestUsers)]
+    avgRating = NNRatings.apply(np.nanmean).dropna()
+    booksAlreadyRead = userItemRatingMatrix.transpose()[user].dropna().index
+    avgRating = avgRating[~avgRating.index.isin(booksAlreadyRead)]
+    topNISBNs = avgRating.sort_values(ascending=False).index[:N]
+    return pd.Series(topNISBNs).apply(bookMeta)
+    
+    
+faveBooks(204813,10)
+
+topN(204813,10)
+
+```
+
+
+
+
+
+
+
 
 
 
