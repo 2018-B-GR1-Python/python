@@ -58,7 +58,7 @@ Subir 2 directorios y correr el spider
 
 ```
 $ cd ../..
-$ scrapy crawl intro_spider_01
+$ scrapy crawl introduccion_spider
 ```
 
 
